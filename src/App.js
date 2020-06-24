@@ -68,7 +68,7 @@ export default function App() {
                   style={styles.likeText}
                   testID={`repository-likes-${repo.id}`}
                 >
-                  {`${repo.likes} curida`}
+                  {`${repo.likes} curtida${repo.likes != 1 ? 's' : ''}`}
                 </Text>
               </View>
 
