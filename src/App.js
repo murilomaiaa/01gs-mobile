@@ -17,7 +17,7 @@ export default function App() {
     // achar o item pelo id (retornar o index)
     // item.likes++
     // colocar o item no array[i]
-
+    api.post(`repositories/${id}/like`)
     const index = repositories.findIndex((repository) => repository.id == id)
     let repos = [...repositories]
     repos[index].likes++
@@ -49,7 +49,7 @@ export default function App() {
 
               {repo.techs.map(tech => (
                 <View style={styles.techsContainer}>
-                  <Text>{tech}</Text>
+                  <Text style={styles.tech}>{tech}</Text>
                 </View>
               ))}
 
@@ -129,4 +129,3 @@ const styles = StyleSheet.create({
     padding: 15,
   },
 });
-
