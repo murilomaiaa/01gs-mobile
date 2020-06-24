@@ -13,6 +13,18 @@ import {
 import api from './services/api'
 
 export default function App() {
+
+
+  const [repositories, setRepositories] = useState([])
+
+  useEffect(() => {
+    api.get('/repositories').then(res => {
+      setRepositories(res.data)
+    }).catch(e => {
+      console.log(e)
+    })
+  }, [])
+
   async function handleLikeRepository(id) {
     // achar o item pelo id (retornar o index)
     // item.likes++
@@ -33,14 +45,6 @@ export default function App() {
     setRepositories(repos)
   }
 
-  const [repositories, setRepositories] = useState([])
-
-  useEffect(() => {
-    api.get('/repositories').then(res => {
-      setRepositories(res.data)
-    })
-  }, [])
-
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
@@ -53,18 +57,18 @@ export default function App() {
 
               <Text style={styles.repository}>{repo.title}</Text>
 
-              {repo.techs.map(tech => (
-                <View key={tech} style={styles.techsContainer}>
-                  <Text style={styles.tech}>{tech}</Text>
-                </View>
-              ))}
+              <View key={repo.tech} style={styles.techsContainer}>
+                {repo.techs.map(tech => (
+                  <Text key={tech} style={styles.tech}>{tech}</Text>
+                ))}
+              </View>
 
               <View style={styles.likesContainer}>
                 <Text
                   style={styles.likeText}
                   testID={`repository-likes-${repo.id}`}
                 >
-                  {repo.likes}
+                  {`${repo.likes} curida`}
                 </Text>
               </View>
 
