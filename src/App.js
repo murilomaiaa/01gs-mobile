@@ -17,20 +17,26 @@ export default function App() {
     // achar o item pelo id (retornar o index)
     // item.likes++
     // colocar o item no array[i]
-    api.post(`repositories/${id}/like`)
-    const index = repositories.findIndex((repository) => repository.id == id)
-    let repos = [...repositories]
-    repos[index].likes++
+    const { data: likedRepo } = await api.post(`repositories/${id}/like`)
 
+    const repos = repositories.map(repo => {
+      // repo.id === likedRepo.id
+      //   ? likedRepo
+      //   : repo
+      if (repo.id === likedRepo.id) {
+        return likedRepo
+      }
+
+      return repo
+    })
+    console.log(repos)
     setRepositories(repos)
-
   }
 
   const [repositories, setRepositories] = useState([])
 
   useEffect(() => {
     api.get('/repositories').then(res => {
-      console.log(res.data)
       setRepositories(res.data)
     })
   }, [])
@@ -48,7 +54,7 @@ export default function App() {
               <Text style={styles.repository}>{repo.title}</Text>
 
               {repo.techs.map(tech => (
-                <View style={styles.techsContainer}>
+                <View key={tech} style={styles.techsContainer}>
                   <Text style={styles.tech}>{tech}</Text>
                 </View>
               ))}
