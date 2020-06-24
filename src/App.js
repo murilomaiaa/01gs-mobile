@@ -14,6 +14,15 @@ import api from './services/api'
 
 export default function App() {
   async function handleLikeRepository(id) {
+    // achar o item pelo id (retornar o index)
+    // item.likes++
+    // colocar o item no array[i]
+
+    const index = repositories.findIndex((repository) => repository.id == id)
+    let repos = [...repositories]
+    repos[index].likes++
+
+    setRepositories(repos)
 
   }
 
@@ -64,6 +73,7 @@ export default function App() {
             </View>
           )}
         />
+        {/* ending of flatlist */}
       </SafeAreaView>
     </>
   );
